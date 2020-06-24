@@ -25,10 +25,6 @@ import (
 var (
     //read kubeconfig
     kubeconfig = flag.String("kubeconfig", "", "absolute path to the kubeconfig file")
-    // kubeconfig = "/_ext/Development/Project/github.com/_k8/kubernetes-auto-ingress/kubeconfig"
-    // kubeconfig = "file:D:\\Development\\Project\\devcn.fun\\g-dev2\\fk-kubernetes-auto-ingress" //try win fail: badPath
-
-	//flagNamespace = flag.String("namespace", "", "filter resources by namespace")
 	
 	//attach params: SERVER_URL, SYNC_TIME, MATCH_LABEL, KUBECONFIG,
 	jumpserverURL      = flag.String("jumpurl", "http://jumpserver", "jumpserver url, default http://jumpserver") 
@@ -59,15 +55,10 @@ type Pod struct {
 
 func main() {
 	flag.Parse()
-	// fmt.Println(*jumpserverLabel)
-	// os.Exit(0)
 
     var err error
     var config *rest.Config
 
-    //if kubeconfig is specified, use out-of-cluster
-    // if *kubeconfig != "" {
-    //     config, err = clientcmd.BuildConfigFromFlags("", *kubeconfig)
     if *kubeconfig != "" {
         config, err = clientcmd.BuildConfigFromFlags("", *kubeconfig)
     } else {
@@ -115,9 +106,8 @@ func hostpush(rows Rows) {
 	var pods Pods
 	pods = make(Pods, 0)
 	for _, row := range rows {
-		//table.Append([]string(row))
 		var pod Pod
-		pod.Ns = string(row[1])//"/jumpserver/1.json"
+		pod.Ns = string(row[1]) //"/jumpserver/1.json"
 		pod.Name = string(row[2])
 		pod.Status = string(row[3])
 		pod.Ip = string(row[4])
@@ -125,19 +115,12 @@ func hostpush(rows Rows) {
 		pods = append(pods, pod)
 	}
 	if bs, err := json.Marshal(pods); err == nil {
-		//        fmt.Println(string(bs))
 		req := bytes.NewBuffer([]byte(bs))
-		// tmp := `{"name":"junneyang", "age": 88}`
-		// req = bytes.NewBuffer([]byte(tmp))
 
 		body_type := "application/json;charset=utf-8"
 		resp, _ := http.Post(*jumpserverURL+"/hostpush/batch/", body_type, req)
 		body, _ := ioutil.ReadAll(resp.Body)
-		// fmt.Println("bodyReturns: ", string(body))
         log.Info("bodyReturns: ", string(body))
-
-		// fmt.Println(string(bs))
-        //log.Info("Pods: ", string(bs))
 	} else {
         log.Info("err: ", err)
 		fmt.Println(err)
@@ -152,20 +135,12 @@ func getPods(ch chan Rows, clientset *kubernetes.Clientset) {
 
 	var rows Rows
 	for _, pod := range pods.Items {
-        //fmt.Println("name: ", pod.ObjectMeta.Name)
-		/* if pod.ObjectMeta.Namespace == "kube-system" {
-			continue
-		}
-		if *flagNamespace != "" && pod.ObjectMeta.Namespace != *flagNamespace {
-			continue
-		} */
 
 		//label
 		lb := pod.Labels
 		if val, found2 := lb[*jumpserverLabel]; found2 {
 			if val == "enabled" {
 
-				// fmt.Println("==============mathed label222")
 				var statuses []string
 				statuses = append(statuses, string(pod.Status.Phase))
 				for _, c := range pod.Status.Conditions {
@@ -189,11 +164,7 @@ func getPods(ch chan Rows, clientset *kubernetes.Clientset) {
 	ch <- rows
 }
 
-// shortHumanDuration is copied from
-// k8s.io/kubernetes/pkg/kubectl/resource_printer.go
 func shortHumanDuration(d time.Duration) string {
-	// Allow deviation no more than 2 seconds(excluded) to tolerate machine time
-	// inconsistence, it can be considered as almost now.
 	if seconds := int(d.Seconds()); seconds < -1 {
 		return fmt.Sprintf("<invalid>")
 	} else if seconds < 0 {
