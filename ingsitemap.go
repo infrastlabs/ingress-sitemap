@@ -53,7 +53,7 @@ type Pod struct {
 	Age     string    `json:"age"`
 }
 
-func main() {
+func main2() {
 	flag.Parse()
 
     var err error
