@@ -3,6 +3,7 @@ module devcn.fun/infrastlabs/ingsitemap
 go 1.13
 
 require (
+	github.com/elazarl/go-bindata-assetfs v1.0.0
 	github.com/gogo/protobuf v1.3.1 // indirect
 	github.com/google/btree v1.0.0 // indirect
 	github.com/google/gofuzz v1.1.0 // indirect
