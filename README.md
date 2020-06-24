@@ -6,6 +6,7 @@ K8S集群Ingress导航
 
 - https://gitee.com/infrastlabs/k8s-jumpserver
 - https://gitee.com/infrastlabs/dh-pages
+- http://git.ali.devcn.fun:81/g-dev2/fk-aigb-swagger
 - 
 - kubernetes-auto-ingress https://github.com/hxquangnhat/kubernetes-auto-ingress
 - kubetop https://github.com/siadat/kubetop
