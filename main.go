@@ -49,7 +49,7 @@ type data struct {
     Title string
 }
 type show struct {
-    Pages []data
+    Pages []*data
 }
 func renderhtml(filename string, out io.Writer) error {
 	bytes, err := asset.Asset("index-tpl.html")//former org-index //without static/
@@ -58,7 +58,7 @@ func renderhtml(filename string, out io.Writer) error {
 		return errors.New("no found home  template  html")
 	}
 
-	mydata := []data{{
+	/* mydata := []data{{
 		Url:   "page-1.html",
 		Title: "go to page 1",
 	}, {
@@ -71,7 +71,9 @@ func renderhtml(filename string, out io.Writer) error {
 		Url:   "page-5.html",
 		Title: "go to page 5",
 	}}
-	webData := show{mydata}
+	webData := show{mydata} */
+	webData := new(show)
+	webData.Pages= getDatas()
 
 	//TODO replace key  //sam: go template
 	return template.Must(template.New("markdown").Parse(string(bytes))).Execute(out, webData)

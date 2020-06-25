@@ -105,17 +105,18 @@ func main2() {
 
 func getPods(ch chan Rows, clientset *kubernetes.Clientset) {
 	// pods, err := clientset.Core().Pods("").List(v1.ListOptions{})
-	pods, err := clientset.ExtensionsV1beta1().Ingresses("").List(v1.ListOptions{})
+	ings, err := clientset.ExtensionsV1beta1().Ingresses("").List(v1.ListOptions{})
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	var rows Rows
-	for _, pod := range pods.Items {
+	for _, ing := range ings.Items {
 
-		// pod.Name
+		// ing.Name
 		// log.Info("Ing added: ", i.Name, " > ", i.Spec.Rules[0].Host)
-		fmt.Println(pod.Name)
+		// fmt.Println(ing.Name)
+		log.Info("Ing added: ", ing.Name, " > ", ing.Spec.Rules[0].Host)
 		//label
 		/* lb := pod.Labels
 		if val, found2 := lb[*jumpserverLabel]; found2 {
@@ -142,6 +143,55 @@ func getPods(ch chan Rows, clientset *kubernetes.Clientset) {
 
 	}
 	ch <- rows
+}
+
+func getDatas()([]*data){
+	flag.Parse()
+
+    var err error
+    var config *rest.Config
+
+    if kubeconfig != "" {
+        config, err = clientcmd.BuildConfigFromFlags("", kubeconfig)
+    } else {
+        //get config when running inside Kubernetes
+        config, err = rest.InClusterConfig()
+    }
+
+    if err != nil {
+        log.Errorln(err.Error())
+        return nil
+    }
+
+    clientset, err := kubernetes.NewForConfig(config)
+    if err != nil {
+        log.Errorln(err.Error())
+        return nil
+	}	
+	
+	pages:=getIngs(clientset)
+	return pages
+}
+
+func getIngs(clientset *kubernetes.Clientset)([]*data) {
+	// pods, err := clientset.Core().Pods("").List(v1.ListOptions{})
+	ings, err := clientset.ExtensionsV1beta1().Ingresses("").List(v1.ListOptions{})
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// var rows Rows
+	var pages []*data
+	for _, ing := range ings.Items {
+		log.Info("Ing added: ", ing.Name, " > ", ing.Spec.Rules[0].Host)
+		d:= new(data)
+		d.Title=ing.Name
+		d.Url=ing.Spec.Rules[0].Host+":31714"
+
+		pages= append(pages, d)
+	}
+
+	return pages
 }
 
 func shortHumanDuration(d time.Duration) string {
