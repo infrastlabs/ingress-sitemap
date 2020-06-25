@@ -80,7 +80,7 @@ func renderhtml(filename string, out io.Writer) error {
 	return template.Must(template.New("markdown").Parse(string(bytes))).Execute(out, webData)
 }
 
-func handleServerSwagger(w http.ResponseWriter, r *http.Request) {
+func handlePage(w http.ResponseWriter, r *http.Request) {
 	handleFuncHttp(w, r)
 
 	var code = 200
@@ -118,7 +118,7 @@ func main() {
         AssetInfo: asset.AssetInfo,
 	}
 	// http.Handle("/docs/", http.StripPrefix("/docs/", http.FileServer(http.Dir("docs")))) //yaml|json
-	http.HandleFunc("/page", handleServerSwagger)//handel to index-tpl.html
+	http.HandleFunc("/page", handlePage)//handel to index-tpl.html
 	
 	// http.Handle("/", http.FileServer(http.Dir("static")))//for dbg
 	http.Handle("/", http.FileServer(&fs))
