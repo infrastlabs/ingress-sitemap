@@ -6,12 +6,12 @@ import (
     "flag"
 
     "sort"
-    "encoding/json"
+    // "encoding/json"
     "sync"
 
-    "io/ioutil"
-    "net/http"
-	"bytes"
+    // "io/ioutil"
+    // "net/http"
+	// "bytes"
 	// "os"
     
     "k8s.io/client-go/rest"
@@ -24,8 +24,9 @@ import (
 
 var (
     //read kubeconfig
-    kubeconfig = flag.String("kubeconfig", "", "absolute path to the kubeconfig file")
-	
+    // kubeconfig = flag.String("kubeconfig", "", "absolute path to the kubeconfig file")
+	kubeconfig = "/_ext/Development/Project/devcn.fun/g-dev2/fk-kubernetes-auto-ingress/kubeconfig-vm23.203"
+
 	//attach params: SERVER_URL, SYNC_TIME, MATCH_LABEL, KUBECONFIG,
 	jumpserverURL      = flag.String("jumpurl", "http://jumpserver", "jumpserver url, default http://jumpserver") 
 	jumpserverPushTime = flag.Int("jumptime", 3, "jump sync-push time, default 3")
@@ -53,14 +54,14 @@ type Pod struct {
 	Age     string    `json:"age"`
 }
 
-func main2() {
+func main() {
 	flag.Parse()
 
     var err error
     var config *rest.Config
 
-    if *kubeconfig != "" {
-        config, err = clientcmd.BuildConfigFromFlags("", *kubeconfig)
+    if kubeconfig != "" {
+        config, err = clientcmd.BuildConfigFromFlags("", kubeconfig)
     } else {
         //get config when running inside Kubernetes
         config, err = rest.InClusterConfig()
@@ -89,7 +90,7 @@ func main2() {
             }
 
             sort.Sort(rows)
-            hostpush(rows)
+            // hostpush(rows)
         }()
 
         var wg sync.WaitGroup
@@ -102,33 +103,9 @@ func main2() {
 	}
 }
 
-func hostpush(rows Rows) {
-	var pods Pods
-	pods = make(Pods, 0)
-	for _, row := range rows {
-		var pod Pod
-		pod.Ns = string(row[1]) //"/jumpserver/1.json"
-		pod.Name = string(row[2])
-		pod.Status = string(row[3])
-		pod.Ip = string(row[4])
-		pod.Age = string(row[5])
-		pods = append(pods, pod)
-	}
-	if bs, err := json.Marshal(pods); err == nil {
-		req := bytes.NewBuffer([]byte(bs))
-
-		body_type := "application/json;charset=utf-8"
-		resp, _ := http.Post(*jumpserverURL+"/hostpush/batch/", body_type, req)
-		body, _ := ioutil.ReadAll(resp.Body)
-        log.Info("bodyReturns: ", string(body))
-	} else {
-        log.Info("err: ", err)
-		fmt.Println(err)
-	}	
-}
-
 func getPods(ch chan Rows, clientset *kubernetes.Clientset) {
-	pods, err := clientset.Core().Pods("").List(v1.ListOptions{})
+	// pods, err := clientset.Core().Pods("").List(v1.ListOptions{})
+	pods, err := clientset.ExtensionsV1beta1().Ingresses("").List(v1.ListOptions{})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -136,8 +113,11 @@ func getPods(ch chan Rows, clientset *kubernetes.Clientset) {
 	var rows Rows
 	for _, pod := range pods.Items {
 
+		// pod.Name
+		// log.Info("Ing added: ", i.Name, " > ", i.Spec.Rules[0].Host)
+		fmt.Println(pod.Name)
 		//label
-		lb := pod.Labels
+		/* lb := pod.Labels
 		if val, found2 := lb[*jumpserverLabel]; found2 {
 			if val == "enabled" {
 
@@ -158,7 +138,7 @@ func getPods(ch chan Rows, clientset *kubernetes.Clientset) {
 					(shortHumanDuration(time.Since(pod.CreationTimestamp.Time))),
 				})				
 			}
-		}
+		} */
 
 	}
 	ch <- rows
