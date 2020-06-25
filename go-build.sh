@@ -1,5 +1,6 @@
 # go get -u github.com/go-bindata/go-bindata/... 
+echo "go-bindata..."
 go-bindata -fs -pkg asset -prefix "static/" -ignore='(\.gitignore$$|\.map$$)' -o asset/swaggerui-data.go static/...
 
-
+echo "go build..."
 go build ./
