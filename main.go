@@ -72,8 +72,9 @@ func renderhtml(filename string, out io.Writer) error {
 		Title: "go to page 5",
 	}}
 	webData := show{mydata} */
-	webData := new(show)
-	webData.Pages= getDatas()
+	// webData := new(show)
+	// webData.Pages= getDatas()
+	webData := show{getDatas()}
 
 	//TODO replace key  //sam: go template
 	return template.Must(template.New("markdown").Parse(string(bytes))).Execute(out, webData)
