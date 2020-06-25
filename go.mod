@@ -9,6 +9,7 @@ require (
 	github.com/google/gofuzz v1.1.0 // indirect
 	github.com/googleapis/gnostic v0.2.0 // indirect
 	github.com/gregjones/httpcache v0.0.0-20190611155906-901d90724c79 // indirect
+	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	github.com/imdario/mergo v0.3.9 // indirect
 	github.com/json-iterator/go v1.1.9 // indirect
 	github.com/modern-go/reflect2 v1.0.1 // indirect
@@ -20,7 +21,7 @@ require (
 	golang.org/x/time v0.0.0-20191024005414-555d28b269f0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	// k8s.io/api v0.18.0
-	k8s.io/api v0.0.0-20181213150558-05914d821849 // indirect
+	k8s.io/api v0.0.0-20181213150558-05914d821849
 	// k8s.io/apimachinery v0.18.0
 	k8s.io/apimachinery v0.0.0-20181127025237-2b1284ed4c93
 	// k8s.io/client-go v11.0.0+incompatible
