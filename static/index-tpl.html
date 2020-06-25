@@ -49,6 +49,9 @@ display:none!important;}
     </div>        
     
 
-	<div class="footer">觉得还可以，收藏起来以备不时之需</div>
+    <div class="footer">觉得还可以，收藏起来以备不时之需</div>
+    {{range .Pages}}
+            <div class="page"><a href="/posts/{{.Url}}">{{.Title}}</a></div>
+    {{end}}
 </body>
 </html>

@@ -44,19 +44,37 @@ func handleFuncHttp(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+type data struct {
+    Url   string
+    Title string
+}
+type show struct {
+    Pages []data
+}
 func renderhtml(filename string, out io.Writer) error {
-	m := map[string]interface{}{
-		"filename": filename,
-	}
-
 	bytes, err := asset.Asset("index-tpl.html")//former org-index //without static/
 	// bytes, err := ioutil.ReadFile("./static/index-tpl.html") //dbg
 	if err != nil {
 		return errors.New("no found home  template  html")
 	}
 
+	mydata := []data{{
+		Url:   "page-1.html",
+		Title: "go to page 1",
+	}, {
+		Url:   "page-2.html",
+		Title: "go to page 2",
+	}, {
+		Url:   "page-3.html",
+		Title: "go to page 3",
+	}, {
+		Url:   "page-5.html",
+		Title: "go to page 5",
+	}}
+	webData := show{mydata}
+
 	//TODO replace key  //sam: go template
-	return template.Must(template.New("markdown").Parse(string(bytes))).Execute(out, m)
+	return template.Must(template.New("markdown").Parse(string(bytes))).Execute(out, webData)
 }
 
 func handleServerSwagger(w http.ResponseWriter, r *http.Request) {
@@ -73,13 +91,8 @@ func handleServerSwagger(w http.ResponseWriter, r *http.Request) {
 	}()
 
 	r.ParseForm()
-	if len(r.Form["path"]) > 0 {
-		err = renderhtml(r.Form["path"][0], w)
-		if err != nil {
-			http.Redirect(w, r, "/", http.StatusMovedPermanently)
-			return
-		}
-	} else {
+	err = renderhtml("emp", w)
+	if err != nil {
 		http.Redirect(w, r, "/", http.StatusMovedPermanently)
 		return
 	}
