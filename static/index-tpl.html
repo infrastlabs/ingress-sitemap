@@ -19,39 +19,21 @@ display:none!important;}
 </style>	
 </head>
 <body>
-
     <div class="list"><img width="300" src="./images/logo0.png" alt="devflow in k3s"></div>
-    <div class="list">
-        <li onclick="javascript:this.getElementsByTagName('a')[0].click();">
-            <span class="icon">H</span>
-            <a href="https://view.k3.demo1.cn:31714/" target="_blank" class="text">
-                <h2>View</h2>
-                <h3>view</h3>
-            </a>
-        </li>        
-        <li onclick="javascript:this.getElementsByTagName('a')[0].click();">
-            <span class="icon">P</span>
-            <a href="https://report.k3.demo1.cn:31714/" target="_blank" class="text">
-                <h2>Report</h2>
-                <h3>report</h3>
-            </a>
-        </li>   
-    </div>
 
+    <!-- <div class="page"><a href="/posts/{#{.Url}}">{#{.Title}}</a></div> -->
     <div class="list">
+    {{range .Pages}}
         <li onclick="javascript:this.getElementsByTagName('a')[0].click();">
             <span class="icon">K</span>
-            <a href="https://gitee.com/infrastlabs/k8s-jumpserver" target="_blank" class="text">
-                <h2>k8s-jump</h2>
-                <h3>Link链接</h3>
+            <a href="https://{{.Url}}" target="_blank" class="text">
+                <h2>{{.Title}}</h2>
+                <h3>{{.Title}}</h3>
             </a>
         </li>        
-    </div>        
-    
-
-    <div class="footer">觉得还可以，收藏起来以备不时之需</div>
-    {{range .Pages}}
-            <div class="page"><a href="/posts/{{.Url}}">{{.Title}}</a></div>
     {{end}}
+    </div>
+    <div class="footer">觉得还可以，收藏起来以备不时之需</div>
+    
 </body>
 </html>

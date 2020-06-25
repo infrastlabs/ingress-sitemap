@@ -115,7 +115,7 @@ func main() {
         AssetInfo: asset.AssetInfo,
 	}
 	// http.Handle("/docs/", http.StripPrefix("/docs/", http.FileServer(http.Dir("docs")))) //yaml|json
-	http.HandleFunc("/doc", handleServerSwagger)//handel to index-tpl.html
+	http.HandleFunc("/page", handleServerSwagger)//handel to index-tpl.html
 	
 	// http.Handle("/", http.FileServer(http.Dir("static")))//for dbg
 	http.Handle("/", http.FileServer(&fs))
