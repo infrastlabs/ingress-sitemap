@@ -71,11 +71,16 @@ spec:
         imagePullPolicy: Always
         # command:
         # - cp
-        args:
-        # - -jumpurl=http://3.4.5.100
-        - -jumpurl=http://jumpserver-svc
-        # - -jumptime=3
-        # - -jumplabel=regist-jumpserver/enabled
+        # args:
+        # - -jumpurl=http://jumpserver-svc
+        env:
+          - name: AUTO_INGRESS_SERVER_NAME
+            value: "demo1.cn"
+          - name: GW_HTTP_PORT
+            value: "32603"
+          - name: GW_HTTPS_PORT
+            value: "31714"
+            
 
         # these liveness probes use the metrics endpoint
         # readinessProbe:
