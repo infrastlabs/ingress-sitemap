@@ -24,7 +24,8 @@ rules:
   - apiGroups:
       - ""
     resources:
-      - pods
+      - services
+      - ingresses
     verbs:
       - get
       - list
