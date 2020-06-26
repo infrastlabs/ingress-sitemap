@@ -16,17 +16,23 @@
     }
 	#meerkat-wrap,#sitemix_pr_footer_js{
 display:none!important;}
+    .shell {
+        font-size: 16px;
+        margin: 0px 20px 20px 20px;
+    }
 </style>	
 </head>
 <body>
     <div class="list"><img width="300" src="./images/logo0.png" alt="devflow in k3s"></div>
+
+    <div class="shell">echo "172.25.23.202 {{range .Pages}}{{.Url}} {{end}}" >> /etc/hosts</div>
 
     <!-- <div class="page"><a href="/posts/{#{.Url}}">{#{.Title}}</a></div> -->
     <div class="list">
     {{range .Pages}}
         <li onclick="javascript:this.getElementsByTagName('a')[0].click();">
             <span class="icon">K</span>
-            <a href="https://{{.Url}}" target="_blank" class="text">
+            <a href="https://{{.Url}}:{{.Port}}" target="_blank" class="text">
                 <h2>{{.Title}}</h2>
                 <h3>{{.Title}}</h3>
             </a>
