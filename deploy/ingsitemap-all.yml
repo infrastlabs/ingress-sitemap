@@ -73,7 +73,7 @@ spec:
         # command:
         # - cp
         # args:
-        # - -jumpurl=http://jumpserver-svc
+        # - -jumpurl=http://ingsitemap-svc
         env:
           - name: AUTO_INGRESS_SERVER_NAME
             value: "demo1.cn"
@@ -123,3 +123,19 @@ spec:
         #   - name: http-metrics
         #     containerPort: 8080
         #     protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ingsitemap-svc
+  namespace: kube-system
+  labels:
+    app: ingsitemap-svc
+spec:
+  ports:
+    - port: 9010
+      name: http
+      targetPort: 9010
+  selector:
+    app: "ingsitemap"
+  type: NodePort
