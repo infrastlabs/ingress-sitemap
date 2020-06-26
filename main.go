@@ -14,6 +14,7 @@ import (
 	// "path/filepath"
 	"strings"
 	"devcn.fun/infrastlabs/ingsitemap/asset"
+	"devcn.fun/infrastlabs/ingsitemap/ingress"
 	"github.com/elazarl/go-bindata-assetfs"
 )
 
@@ -44,13 +45,6 @@ func handleFuncHttp(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-type data struct {
-    Url   string
-    Title string
-}
-type show struct {
-    Pages []*data
-}
 func renderhtml(filename string, out io.Writer) error {
 	bytes, err := asset.Asset("index-tpl.html")//former org-index //without static/
 	// bytes, err := ioutil.ReadFile("./static/index-tpl.html") //dbg
@@ -74,7 +68,7 @@ func renderhtml(filename string, out io.Writer) error {
 	webData := show{mydata} */
 	// webData := new(show)
 	// webData.Pages= getDatas()
-	webData := show{getDatas()}
+	webData := ingress.Show{ingress.GetDatas()}
 
 	//TODO replace key  //sam: go template
 	return template.Must(template.New("markdown").Parse(string(bytes))).Execute(out, webData)

@@ -1,5 +1,5 @@
 // devcn.fun/g-dev2/fk-kubernetes-auto-ingress/main-svc.go
-package main
+package ingress
 
 import (
     "os"
@@ -29,11 +29,11 @@ var (
     secret = os.Getenv("AUTO_INGRESS_SECRET")
     //read kubeconfig
     // kubeconfig = flag.String("kubeconfig", "", "absolute path to the kubeconfig file")
-    kubeconfig = "/_ext/Development/Project/devcn.fun/g-dev2/fk-kubernetes-auto-ingress/kubeconfig-vm23.203"
+    // kubeconfig = "/_ext/Development/Project/devcn.fun/g-dev2/fk-kubernetes-auto-ingress/kubeconfig-vm23.203"
 
 )
 
-func main() {
+func main2() {
     flag.Parse()
 
     var err error

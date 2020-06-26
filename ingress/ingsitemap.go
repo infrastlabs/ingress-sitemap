@@ -1,4 +1,4 @@
-package main
+package ingress
 
 import (
     // "fmt"
@@ -29,7 +29,7 @@ var (
 
 )
 
-func getDatas()([]*data){
+func GetDatas()([]*data){
 	flag.Parse()
 
     var err error
@@ -57,6 +57,13 @@ func getDatas()([]*data){
 	return pages
 }
 
+type data struct {
+    Url   string
+    Title string
+}
+type Show struct {
+    Pages []*data
+}
 func getIngs(clientset *kubernetes.Clientset)([]*data) {
 	// pods, err := clientset.Core().Pods("").List(v1.ListOptions{})
 	ings, err := clientset.ExtensionsV1beta1().Ingresses("").List(v1.ListOptions{})
