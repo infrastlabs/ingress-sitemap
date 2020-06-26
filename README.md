@@ -2,6 +2,11 @@
 
 K8S集群Ingress导航
 
+## Feats
+
+- 可视导航页、hosts自定义域名快速添加
+- 自动由svc生成ingress 少一层ingress维护
+
 ## QuickStart
 
 - install
