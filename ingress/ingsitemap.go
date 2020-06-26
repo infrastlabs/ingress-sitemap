@@ -24,8 +24,8 @@ import (
 
 var (
     //read kubeconfig
-    // kubeconfig = flag.String("kubeconfig", "", "absolute path to the kubeconfig file")
-	kubeconfig = "/_ext/Development/Project/devcn.fun/g-dev2/fk-kubernetes-auto-ingress/kubeconfig-vm23.203"
+    // kubeconfig = new(string)
+    kubeconfig = flag.String("kubeconfig", "", "absolute path to the kubeconfig file")
     clientset *kubernetes.Clientset
 )
 
@@ -35,8 +35,9 @@ func init(){
     var err error
     var config *rest.Config
 
-    if kubeconfig != "" {
-        config, err = clientcmd.BuildConfigFromFlags("", kubeconfig)
+    *kubeconfig = "/_ext/Development/Project/devcn.fun/g-dev2/fk-kubernetes-auto-ingress/kubeconfig-vm23.203"
+    if *kubeconfig != "" {
+        config, err = clientcmd.BuildConfigFromFlags("", *kubeconfig)
     } else {
         //get config when running inside Kubernetes
         config, err = rest.InClusterConfig()
