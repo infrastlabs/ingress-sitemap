@@ -11,7 +11,8 @@ ENV GO111MODULE=on
 ENV GOPROXY=https://goproxy.cn
 
 # Build
-RUN pwd && ls -h && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -o ingsitemap ${dir}/
+RUN pwd && bash go-build.sh
+# RUN pwd && ls -h && CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -o ingsitemap ${dir}/
 
 # Copy data into a empty image
 FROM registry.cn-shenzhen.aliyuncs.com/infrastlabs/alpine-ext
