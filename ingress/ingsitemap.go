@@ -35,7 +35,7 @@ func init(){
     var err error
     var config *rest.Config
 
-    *kubeconfig = "/_ext/Development/Project/devcn.fun/g-dev2/fk-kubernetes-auto-ingress/kubeconfig-vm23.203"
+    // *kubeconfig = "/_ext/Development/Project/devcn.fun/g-dev2/fk-kubernetes-auto-ingress/kubeconfig-vm23.203"
     if *kubeconfig != "" {
         config, err = clientcmd.BuildConfigFromFlags("", *kubeconfig)
     } else {
