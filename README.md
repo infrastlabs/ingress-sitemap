@@ -16,8 +16,35 @@ K8S集群Ingress导航
 - ~~罗列ingress, 使用goTemplates生成index.html模板 (ref: aigb-swagger)~~ Done.
 - 自动由svc生成ing: 识别label, +annotation自定义名;  (1.更好定制domain后缀；2.少一层ingress维护)
 
+## QuickStart
 
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-service
+  labels:
+    app: myapp
+    auto-ingress/enabled: 'enabled'
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+  selector:
+    app: myapp
+```
 
+## Dev
+
+```bash
+sh go-build.sh
+
+export AUTO_INGRESS_SERVER_NAME=demo1.cn
+go run *.go
+./ingsitemap
+```
 
 
 
