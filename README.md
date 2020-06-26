@@ -52,6 +52,8 @@ go run *.go
 
 - ~~罗列ingress, 使用goTemplates生成index.html模板 (ref: aigb-swagger)~~ Done.
 - ~~自动由svc生成ing: 识别label, +env自定义域名;~~  (1.更好定制domain后缀；2.少一层ingress维护)
+- 更改域名清理已有ingress(loopJudge)
+- ingress命名分组展示
 
 ## ref
 
