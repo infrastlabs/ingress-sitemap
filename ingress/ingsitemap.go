@@ -26,10 +26,10 @@ var (
     //read kubeconfig
     // kubeconfig = flag.String("kubeconfig", "", "absolute path to the kubeconfig file")
 	kubeconfig = "/_ext/Development/Project/devcn.fun/g-dev2/fk-kubernetes-auto-ingress/kubeconfig-vm23.203"
-
+    clientset *kubernetes.Clientset
 )
 
-func GetDatas()([]*data){
+func init(){
 	flag.Parse()
 
     var err error
@@ -44,17 +44,16 @@ func GetDatas()([]*data){
 
     if err != nil {
         log.Errorln(err.Error())
-        return nil
+        return
+        // TODO throw err
     }
 
-    clientset, err := kubernetes.NewForConfig(config)
+    clientset, err = kubernetes.NewForConfig(config)
     if err != nil {
         log.Errorln(err.Error())
-        return nil
-	}	
-	
-	pages:=getIngs(clientset)
-	return pages
+        return
+        // TODO throw err
+	}	    
 }
 
 type data struct {
@@ -64,7 +63,7 @@ type data struct {
 type Show struct {
     Pages []*data
 }
-func getIngs(clientset *kubernetes.Clientset)([]*data) {
+func GetIngs()([]*data) {
 	// pods, err := clientset.Core().Pods("").List(v1.ListOptions{})
 	ings, err := clientset.ExtensionsV1beta1().Ingresses("").List(v1.ListOptions{})
 	if err != nil {

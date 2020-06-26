@@ -68,7 +68,7 @@ func renderhtml(filename string, out io.Writer) error {
 	webData := show{mydata} */
 	// webData := new(show)
 	// webData.Pages= getDatas()
-	webData := ingress.Show{ingress.GetDatas()}
+	webData := ingress.Show{ingress.GetIngs()}
 
 	//TODO replace key  //sam: go template
 	return template.Must(template.New("markdown").Parse(string(bytes))).Execute(out, webData)
