@@ -18,6 +18,10 @@ K8S集群Ingress导航
 
 ## QuickStart
 
+```bash
+kc apply -k https://gitee.com/infrastlabs/ingress-sitemap//deploy
+```
+
 ```yaml
 apiVersion: v1
 kind: Service
