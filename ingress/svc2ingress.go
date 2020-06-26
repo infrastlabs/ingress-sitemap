@@ -4,12 +4,12 @@ package ingress
 import (
     "os"
     "time"
-    "flag"
+    // "flag"
     "reflect"
-    "k8s.io/client-go/rest"
+    // "k8s.io/client-go/rest"
     "k8s.io/client-go/kubernetes"
     "k8s.io/client-go/tools/cache"
-    "k8s.io/client-go/tools/clientcmd"
+    // "k8s.io/client-go/tools/clientcmd"
     core "k8s.io/api/core/v1"
     extensions "k8s.io/api/extensions/v1beta1"
     "k8s.io/apimachinery/pkg/fields"
@@ -33,10 +33,10 @@ var (
 
 )
 
-func main2() {
-    flag.Parse()
-
+func watchSvc2Ing() {
     var err error
+    /* flag.Parse()
+
     var config *rest.Config
 
     //if kubeconfig is specified, use out-of-cluster
@@ -56,7 +56,7 @@ func main2() {
     if err != nil {
         log.Errorln(err.Error())
         return
-    }
+    } */
 
     //map to keep track of which services have been already auto-ingressed
 	var svcIngPair map[string]extensions.Ingress
@@ -148,9 +148,9 @@ func main2() {
     )
     stop := make(chan struct{})
     go controller.Run(stop)
-    for{
+    /* for{
         time.Sleep(time.Second)
-    }
+    } */
 }
 
 //create service map in the initial phase to check the current ingresses running on cluster

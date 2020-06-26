@@ -53,7 +53,9 @@ func init(){
         log.Errorln(err.Error())
         return
         // TODO throw err
-	}	    
+    }	    
+    
+    watchSvc2Ing() //
 }
 
 type data struct {
@@ -73,7 +75,7 @@ func GetIngs()([]*data) {
 	// var rows Rows
 	var pages []*data
 	for _, ing := range ings.Items {
-		log.Info("Ing added: ", ing.Name, " > ", ing.Spec.Rules[0].Host)
+		log.Info("get ingress: ", ing.Name, " > ", ing.Spec.Rules[0].Host)
 		d:= new(data)
 		d.Title=ing.Name
 		d.Url=ing.Spec.Rules[0].Host+":31714"
