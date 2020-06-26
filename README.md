@@ -18,9 +18,15 @@ K8S集群Ingress导航
 
 ## QuickStart
 
+- install
+
 ```bash
 kc apply -k https://gitee.com/infrastlabs/ingress-sitemap//deploy
 ```
+
+- service
+  - ingressed label: `auto-ingress/enabled: enabled`
+  - un-ingressed label: `auto-ingress/enabled: disabled`
 
 ```yaml
 apiVersion: v1
