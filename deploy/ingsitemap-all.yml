@@ -36,7 +36,9 @@ rules:
     verbs:
       - get
       - list
-      - watch      
+      - watch
+      - create
+      - delete
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
