@@ -42,6 +42,7 @@ spec:
 sh go-build.sh
 
 export AUTO_INGRESS_SERVER_NAME=demo1.cn
+export GW_HTTPS_PORT=31714
 go run *.go
 ./ingsitemap
 ```

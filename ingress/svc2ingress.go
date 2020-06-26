@@ -25,6 +25,9 @@ import (
 var (
     //dns wildcard record for all applications created, should be like example.com
     wildcardRecord = os.Getenv("AUTO_INGRESS_SERVER_NAME")
+    httpPort = os.Getenv("GW_HTTP_PORT")
+    httpsPort = os.Getenv("GW_HTTPS_PORT")
+
     //secret for ssl/tls of namespace where auto-ingress is running
     secret = os.Getenv("AUTO_INGRESS_SECRET")
     //read kubeconfig
